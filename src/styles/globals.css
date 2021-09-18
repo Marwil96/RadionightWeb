@@ -1,0 +1,71 @@
+:root {
+  --primary: #ff7c1f;
+  --ocean: #050898;
+  --secondary: #F4EDE3;
+  --black: #121212;
+  --orange: #FF6A00;
+  --bg: #FFF;
+  --dark-grey: #e6e6e6;
+  --bright-orange: #ff7c1f;
+  --help-color: #830C08;
+  --white: #ffffff;
+  --dark-green: #004225;
+  --smooth-green: #D8E2DC;
+  --smooth-orange: #FFD7BA;
+  --paper: #ECECE7;
+  --max-width: 160rem;
+}
+
+html,
+body {
+  font-size: 62.5%;
+  background-color: var(--bg);
+  padding: 0;
+  margin: 0;
+  /* overflow-x: hidden; */
+  font-family: "Manrope", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+@media screen and (max-width: 1440px) {
+  html,body {
+    font-size: 43.25%;
+  }
+}
+
+button {
+  font-family: "Manrope";
+  font-weight: 500;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,h2,h3,h4,h5,span,p {
+  padding: 0;
+  margin: 0;
+  color: var(--white);
+}
+
+h1 {
+  font-family: "Manrope";
+}
+
+h3 {
+  font-family: "Manrope";
+  font-weight: 400;
+}
+
+input, textarea {
+  font-family: 'Manrope';
+}
+
+
+@supports (font-variation-settings: normal) {
+  html { font-family: "Manrope var", "system-ui"; }
+}
