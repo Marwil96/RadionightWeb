@@ -2,7 +2,7 @@ import { CREATE_USER, LOGIN_USER, SIGN_OUT_USER, CREATE_PODCAST, FETCH_ALL_USER_
 import { Dispatch } from "redux";
 import { firebaseConfig } from "../../firebaseConfig";
 import { initializeApp } from "@firebase/app";
-import { getFirestore, collection, doc, setDoc, onSnapshot, getDoc, arrayRemove, arrayUnion, query, getDocs, where } from "@firebase/firestore";
+import { getFirestore, collection, doc, setDoc, onSnapshot, getDoc, arrayRemove, arrayUnion, query, getDocs, where, deleteDoc } from "@firebase/firestore";
 import { getAuth } from "@firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -178,7 +178,7 @@ export const InviteUserToMod = async ({userName, podcastId, podcastTitle, offici
   })
 
   if(userId.length > 0) {
-    const response = await db.collection('users').doc(userId[0].user_id).set({invited_to_mod: firebase.firestore.FieldValue.arrayUnion({podcast_title: podcastTitle, podcast_id: podcastId, official_broadcast: officialBroadcast})}, {merge: true}).then(()  => {
+    const response = await setDoc(doc(db, 'users', userId[0].user_id), {invited_to_mod: arrayUnion({podcast_title: podcastTitle, podcast_id: podcastId, official_broadcast: officialBroadcast})}, { merge: true }).then(()  => {
       return true
     }).catch((error) => false);
     return response
@@ -189,83 +189,82 @@ export const InviteUserToMod = async ({userName, podcastId, podcastTitle, offici
   return response
 }
 
-// export const AddChatMessage = async ({isMod, message, episodeId, messageAuthor}) => {
-//   const chatId = getTimeEpoch();
+export const AddChatMessage = async ({isMod, message, episodeId, messageAuthor} : {isMod: any, message: string, episodeId: string, messageAuthor: any}) => {
+  const chatId = getTimeEpoch();
 
-//   const result = await db.collection("episodes").doc(episodeId).collection('chat').doc(chatId).set({isMod, message, message_author: messageAuthor, chat_id:chatId, time_stamp: chatId }).then(() => { 
-//       return true
-//     }).catch((error) => {
-//       return false
-//     })
+  const result = await setDoc(doc(db, `episodes/${episodeId}/chat/${chatId}`), {isMod, message, message_author: messageAuthor, chat_id:chatId, time_stamp: chatId }).then(() => { 
+      return true
+    }).catch((error) => {
+      return false
+    })
     
-//   return result
-// }
+  return result
+}
 
-// export const RemoveChatMessage = async ({episodeId, messageId}) => {
+export const RemoveChatMessage = async ({episodeId, messageId} : {episodeId: string, messageId: string}) => {
 
-//   const result = await db.collection("episodes").doc(episodeId).collection('chat').doc(messageId).delete().then(() => { 
-//       return true
-//     }).catch((error) => {
-//       return false
-//     })
+  const result = await deleteDoc(doc(db, `episodes/${episodeId}/chat/${messageId}`)).then(() => { 
+      return true
+    }).catch((error) => {
+      return false
+    })
     
-//   return result
-// }
+  return result
+}
 
-// export const GetChatMessages = ({episodeId}) => {
-//   console.log('GETCHATMESSAGE', episodeId )
-//   return (dispatch: Dispatch) => {
-//     dispatch({type: GET_CHAT_MESSAGES, payload: {loading: true, chat_messages: []}})
-//     db.collection('episodes').doc(episodeId).collection('chat').onSnapshot((querySnapshot) => {
-//       const messages = [];
-//       querySnapshot.forEach((doc) => {
-//         messages.push(doc.data());
-//       });
+export const GetChatMessages = ({ episodeId } : {episodeId: string}) => {
+  console.log('GETCHATMESSAGE', episodeId )
 
-//       console.log(messages)
+  return (dispatch: Dispatch) => {
+    dispatch({type: GET_CHAT_MESSAGES, payload: {loading: true, chat_messages: []}})
+    onSnapshot(collection(db, `episodes/${episodeId}/chat`), (querySnapshot) => {
+      const messages = [];
+      querySnapshot.forEach((doc) => {
+        messages.push(doc.data());
+      });
 
-//       dispatch({type: GET_CHAT_MESSAGES, payload: {loading: false, chat_messages: messages }})
-//     })
-//   }
-// }
+      console.log(messages)
 
-// export const GetPodcastPremieres = async (id) => {
-//   const result = await Promise.all(
-//   await db.collection("episodes").where("podcast_id", "==", id)
-//     .get()
-//     .then((querySnapshot) => {
-//       const upcomingEpisodes = [];
-//       const pastEpisodes = [];
-//       const liveEpisodes = [];
-//         querySnapshot.forEach((doc) => {
-//             // doc.data() is never undefined for query doc snapshots
-//             const data = doc.data();
-//             const currentDate = new Date();
-//             const episodeGoesLive = new Date(data.start_date);
-//             const episodeIsDone = new Date(data.start_date).setSeconds(episodeGoesLive.getSeconds() + data.duratation);
+      dispatch({type: GET_CHAT_MESSAGES, payload: {loading: false, chat_messages: messages }})
+    })
+  }
+}
+
+export const GetPodcastPremieres = async (id : string) => {
+  const result = await getDocs(query(collection(db, 'episodes'), where("podcast_id", "==", id))).then((querySnapshot) => {
+      const upcomingEpisodes = [];
+      const pastEpisodes = [];
+      const liveEpisodes = [];
+      
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            const data = doc.data();
+            const currentDate = new Date();
+            const episodeGoesLive = new Date(data.start_date);
+            const episodeIsDone = new Date(data.start_date).setSeconds(episodeGoesLive.getSeconds() + data.duratation);
    
-//               if(currentDate > episodeIsDone) {
-//                 pastEpisodes.push({ ...data, episode_state: 'past' });
-//                 // return 'past'
-//               } else if(currentDate > episodeGoesLive && currentDate < episodeIsDone) {
-//                 liveEpisodes.push({ ...data, episode_state: 'live' });
-//                 // return 'live'
-//               } else {
-//                 upcomingEpisodes.push({...data, episode_state: 'upcoming'});
-//                 // return 'upcoming'
-//               }
+              if(currentDate > episodeIsDone) {
+                pastEpisodes.push({ ...data, episode_state: 'past' });
+                // return 'past'
+              } else if(currentDate > episodeGoesLive && currentDate < episodeIsDone) {
+                liveEpisodes.push({ ...data, episode_state: 'live' });
+                // return 'live'
+              } else {
+                upcomingEpisodes.push({...data, episode_state: 'upcoming'});
+                // return 'upcoming'
+              }
 
-//             // const theEpisodeState = episodeState();
-//             // episodes.push({...data, episode_state: theEpisodeState});
-//         });
-//         return [upcomingEpisodes, pastEpisodes, liveEpisodes];
-//     })
-//     .catch((error) => {
-//         console.log("Error getting documents: ", error);
-//     })
-//   )
-//   return {upcomingEpisodes: result[0], pastEpisodes: result[1], liveEpisodes: result[2], allEpisode: [...result[0], ...result[1], ...result[2]]}
-// }
+            // const theEpisodeState = episodeState();
+            // episodes.push({...data, episode_state: theEpisodeState});
+        });
+        return [upcomingEpisodes, pastEpisodes, liveEpisodes];
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    })
+
+  return {upcomingEpisodes: result[0], pastEpisodes: result[1], liveEpisodes: result[2], allEpisode: [...result[0], ...result[1], ...result[2]]}
+}
 
 // export const FetchYourPodcasts = async (podcast_ids) => {
 //   const result = await Promise.all(
