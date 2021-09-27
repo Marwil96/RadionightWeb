@@ -1,3 +1,4 @@
+import { useRouter } from 'next/dist/client/router';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -10,17 +11,26 @@ const Wrapper = styled.div`
   position: fixed;
   left: 0;
   top:0;
+  display: flex;
+  flex-direction: column;
 `
 
-const Logo = styled.h1`
+const Logo = styled.a`
   font-size: 2rem;
   font-weight: 600;
+  color: var(--white);
+`
+
+const Link = styled.a`
+  font-size: 2.4rem;
+  color: var(--white);
 `
 
 const Sidebar = () => {
   return (
     <Wrapper>
-      <Logo>Radionights</Logo>
+      <Logo href='/'>Radionights</Logo>
+      <Link href='/following'>Following</Link>
     </Wrapper>
   )
 }

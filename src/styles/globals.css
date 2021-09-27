@@ -1,7 +1,8 @@
 :root {
-  --primary: #ff7c1f;
+  --primary: #FF6A00;
   --ocean: #050898;
-  --secondary: #F4EDE3;
+  --secondary: #303235;
+  --unfocussed: #BABABA;
   --black: #121212;
   --orange: #FF6A00;
   --bg: #FFF;
@@ -20,6 +21,7 @@ html,
 body {
   font-size: 62.5%;
   background-color: var(--bg);
+  background: var(--bg);
   padding: 0;
   margin: 0;
   /* overflow-x: hidden; */

@@ -13,7 +13,7 @@ const db = getFirestore(app);
 let user = getAuth();
 
 
-export const LoginUser = ({ email, password }) => {
+export const LoginUser = ({ email, password } : {email: string, password: string}) => {
   return (dispatch: Dispatch) => {
     signInWithEmailAndPassword(user, email, password).then(() => {
       // dispatch(FetchAllUserData());
@@ -54,7 +54,7 @@ export const SignOutUser = () => {
 
 export const UpdateUserStatus = () => {
   return (dispatch: Dispatch) => {
-    onAuthStateChanged((user) => {
+    onAuthStateChanged(user, (user) => {
       if (user) {
         dispatch({
           type: UPDATE_USER_STATUS,

@@ -1,5 +1,7 @@
-import React, { Children, ReactNode } from 'react';
+import React, { Children, ReactNode, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { UpdateUserStatus } from '../actions';
 import Sidebar from './Sidebar';
 import TopNav from './TopNav';
 
@@ -14,6 +16,7 @@ const MainContent = styled.main`
   width: calc(100% - 23.5rem);
   margin-top: 9.4rem;
   min-height: 100vh;
+  padding: 4.8rem;
 `
 
 type LayoutProps = {
@@ -21,6 +24,12 @@ type LayoutProps = {
 }
 
 const Layout = ({children} : LayoutProps) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(UpdateUserStatus());
+  }, []);
+  
   return (
     <Wrapper>
       <Sidebar />
