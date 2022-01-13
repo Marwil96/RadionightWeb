@@ -1,0 +1,71 @@
+import { createStitches } from '@stitches/react';
+
+export const { styled, getCssText } : {styled: any, getCssText: any} = createStitches({
+  media: {
+    bp1: '(min-width: 768px)',
+    bp2: '(min-width: 1600px)',
+  },
+  
+  theme: {
+    fonts: {
+      system: 'Manrope, sans-serif',
+      text: 'Manrope, sans-serif',
+      title: 'Manrope, sans-serif',
+      mono: 'monospace',
+    },
+    colors: {
+      primary: '#FF6A00',
+      secondary: '#303235',
+      black: '#000000',
+      text: '#F7F7F7',
+      bg: '#161616',
+      white: '#ffffff',
+    },
+    fontSizes: {
+      1: '1.2rem',
+      2: '1.6rem',
+      3: '2rem',
+      4: '2.4rem',
+      5: '3.2rem',
+      6: '4.2rem',
+      7: '4.8rem',
+      8: '6.4rem',
+    },
+    space: {
+      1: '1.2rem',
+      2: '1.6rem',
+      3: '2rem',
+      4: '2.4rem',
+      5: '3.2rem',
+      6: '4.2rem',
+      7: '4.8rem',
+      8: '6.4rem',
+    },
+    fontWeights: {},
+    lineHeights: {      
+      1: '1.2rem',
+      2: '1.6rem',
+      3: '2rem',
+      4: '2.4rem',
+      5: '3.2rem',
+      6: '4.2rem',
+      7: '4.8rem',
+      8: '6.4rem',},
+    letterSpacings: {},
+    sizes: {      
+      1: '1.2rem',
+      2: '1.6rem',
+      3: '2rem',
+      4: '2.4rem',
+      5: '3.2rem',
+      6: '4.2rem',
+      7: '4.8rem',
+      8: '6.4rem',},
+    borderWidths: {},
+    borderStyles: {},
+    radii: {},
+    shadows: {},
+    zIndices: {},
+    transitions: {},
+  },
+});

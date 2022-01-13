@@ -14,6 +14,7 @@ let user = getAuth();
 
 
 export const LoginUser = ({ email, password } : {email: string, password: string}) => {
+   console.log('LOGIN_USER')
   return (dispatch: Dispatch) => {
     signInWithEmailAndPassword(user, email, password).then(() => {
       // dispatch(FetchAllUserData());

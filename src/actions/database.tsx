@@ -44,10 +44,11 @@ export const FetchPodcastData= async (podcastId: string) => {
   return data
 }
 
-export const UpdateUserData = async ({ data } : object) => {
+export const UpdateUserData = async (data: any) => {
+  console.log(data)
   const url = data.user_image !== undefined && data.user_image !== false ? await UploadImage({file:data.user_image, userId: user.currentUser.uid, fileName:'profile_image'}) : false;
   console.log('URL', url)
-   const response = await setDoc(doc(db, 'users', user.currentUser.uid), {...data, user_image: url}, {merge: true}).then(() => { 
+   const response = await setDoc(doc(db, 'users', user.currentUser.uid), data.user_image !== undefined ? {...data, user_image: url} : {...data}, {merge: true}).then(() => { 
     return true
    }).catch((error) => false);
 

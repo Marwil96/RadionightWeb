@@ -5,53 +5,57 @@ import styled from "styled-components";
 import Button from "./Button";
 
 const Wrapper = styled.div`
-  /* padding: 0 16px; */
-  /* margin-bottom: -12px; */
-  /* background-color: ${props => props.bgColor}; */
+  display: flex;
+  justify-content: center;
 `;
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `
 
 const CardHeader = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   margin-bottom: 12px;
+  justify-content: center;
 `;
 
 const CoverArt = styled.img`
-  height: 67px;
-  width: 67px;
-  margin-right: 12px;
+  height: 80px;
+  width: 80px;
+  margin-bottom: 1.6rem;
   border-radius: 4px;
 `;
 
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   flex-shrink: 1;
 `;
 const Title = styled.span`
-  font-size: 24px;
-  font-family: "Manrope_500Medium";
-  margin-bottom: 1px;
+  font-size: 3.2rem;
+  font-weight: 500;
+  margin-bottom: 4px;
   color: ${props => props.textColor};
   flex-shrink: 1;
+  text-align: center;
 `;
 const Subtitle = styled.span`
   font-size: 16px;
-  font-family: "Manrope_400Regular";
   color: ${props => props.textColor};
   max-width: 300px;
+  text-align: center;
 `;
 
 const BottomRow = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ReadMore = styled.span`
@@ -80,18 +84,18 @@ const PodcastDetailsHeader = ({
   categories,
   official
 } : {
-  onClick: any,
-  title: string,
-  image: any,
-  subtitle: string,
-  desc: string,
-  style: any,
-  isFollowed: boolean,
-  bgColor: string
-  textColor: string,
-  onButtonClick: any,
-  categories: any,
-  official: boolean
+  onClick?: any,
+  title?: string,
+  image?: any,
+  subtitle?: string,
+  desc?: string,
+  style?: any,
+  isFollowed?: boolean,
+  bgColor?: string
+  textColor?: string,
+  onButtonClick?: any,
+  categories?: any,
+  official?: boolean
 }) => {
   const [followingPodcast, setFollowingPodcast] = useState(isFollowed);
   const [descLimit, setDescLimit] = useState(250);
@@ -107,17 +111,20 @@ const PodcastDetailsHeader = ({
             {official  ? <Subtitle>Official</Subtitle> : <Subtitle textColor={textColor}>Community Managed</Subtitle>}
           </TitleContainer>
         </CardHeader>
-        <span style={{ fontSize: '2.2rem', marginBottom: 16, color:textColor, maxWidth: 600, lineHeight:'140%' }}>{desc.slice(0, descLimit)}{descLimit < 251 && desc.length > 250 && '...'}  { desc.length > 250 ? descLimit < 251 ? <ReadMore onClick={() => setDescLimit(10000)}>Read More</ReadMore> :  <ReadMore onClick={() => setDescLimit(250)}>Read Less</ReadMore> : '' } </span>
+        <span style={{ fontSize: '1.6rem', marginBottom: 32, color:textColor, maxWidth: 600, lineHeight:'2.5rem', textAlign: 'center' }}>{desc.slice(0, descLimit)}{descLimit < 251 && desc.length > 250 && '...'}  { desc.length > 250 ? descLimit < 251 ? <ReadMore onClick={() => setDescLimit(10000)}>Read More</ReadMore> :  <ReadMore onClick={() => setDescLimit(250)}>Read Less</ReadMore> : '' } </span>
         
         <BottomRow>
           <Button
-            style={{ paddingTop: 10, paddingBottom: 10 }}
+            style={{marginRight: '1.6rem'}}
             // borderMode={followingPodcast}
-            primary={!followingPodcast}
-            onClick={() => {setFollowingPodcast(!followingPodcast), onButtonClick(!followingPodcast)}}
+            color='primary'
           >
-            {followingPodcast ? "Following Podcast" : "Follow Podcast"}
+            Start Premiere
           </Button>
+          <Button>
+            Edit Podcast
+          </Button>
+          
         </BottomRow>
         <div 
           style={{

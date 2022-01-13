@@ -46,14 +46,12 @@ const TitleContainer = styled.div`
 `;
 const Title = styled.span`
   font-size: 16px;
-  font-family: 'Manrope_500Medium';
   margin-bottom: 3px;
   color: var(--white);
   flex-shrink: 1;
 `
 const Subtitle = styled.span`
   font-size: 14px;
-  font-family: "Manrope_400Regular";
   color: var(--white);
 `;
 
@@ -65,14 +63,12 @@ const BottomRow = styled.div`
 
 const MetaItem = styled.span`
   font-size: 14px;
-  font-family: "Manrope_500Medium";
   color: var(--white);
 `;
 
 
 const Desc = styled.span`
   font-size: 14px;
-  font-family: "Manrope_400Regular";
   color: var(--white);
   word-break: break-word;
 `;
@@ -81,7 +77,7 @@ const PlayButtonWrapper = styled.button`
 
 `
 
-const PodcastCard = ({onClick, title, image, subtitle, desc, meta1, meta2, style, playButton } : {onClick: any, title: string, image: any, subtitle: string, desc: string, meta1: string, meta2: string, style: any, playButton: any }) => {
+const PodcastCard = ({onClick, title, image, subtitle, desc, meta1, meta2, style, playButton } : {onClick?: any, title?: string, image?: any, subtitle?: string, desc?: string, meta1?: string, meta2?: string, style?: any, playButton?: any }) => {
   return (
     <Wrapper onClick={onClick} style={style}>
       <Content className='content'>

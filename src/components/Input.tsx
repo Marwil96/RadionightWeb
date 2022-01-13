@@ -1,7 +1,7 @@
 import { styled } from '../../stitches.config';
   // TODO FIX PRIMARY ERROR
 
-const Button = styled('button', {
+const Input = styled('input', {
   // base styles
   padding: '1rem 1.6rem',
   fontWeight: '400',
@@ -21,8 +21,8 @@ const Button = styled('button', {
 
   variants: {
     color: {
-      primary: {backgroundColor: '$primary', color: '#fff', border: '1px solid $primary','&:hover': {backgroundColor: '#FF9244'}},
-      secondary: {backgroundColor: '$secondary', color: '#fff',  border: '1px solid $secondary','&:hover': {backgroundColor: '#000'}},
+      primary: {backgroundColor: '$primary', color: '#fff', border: '1px solid $primary','&:focus': {backgroundColor: '#333'}},
+      secondary: {backgroundColor: '$secondary', color: '#fff',  border: '1px solid $secondary','&:focus': {backgroundColor: '#000'}},
     },
 
     bordered: {
@@ -72,4 +72,4 @@ const Button = styled('button', {
   }
 });
 
-export default Button;
+export default Input;

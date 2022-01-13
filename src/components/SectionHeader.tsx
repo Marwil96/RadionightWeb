@@ -20,15 +20,15 @@ const SeeMoreButton = styled.span`
   padding-bottom: 2px;
   border-bottom: 1px solid var(--white);
 `
-const SectionHeader = ({title, seeMore} : {title: string, seeMore: any}) => {
+const SectionHeader = ({title, seeMore} : {title: string, seeMore: boolean}) => {
   return (
     <Wrapper>
       <Title>{title}</Title>
-      <SeeMoreButton>See More</SeeMoreButton>
+      {seeMore && <SeeMoreButton>See More</SeeMoreButton>}
     </Wrapper>   
   )
 }
 
-SectionHeader.defaultProps = {seeMore: 'See More', title: 'Premieres'}
+SectionHeader.defaultProps = {seeMore: false, title: 'Premieres'}
 
 export default SectionHeader;
