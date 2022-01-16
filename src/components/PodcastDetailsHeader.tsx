@@ -1,4 +1,5 @@
 import { useRouter } from "next/dist/client/router";
+import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
@@ -7,6 +8,7 @@ import Button from "./Button";
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 6.4rem;
 `;
 
 const Content = styled.div`
@@ -82,7 +84,8 @@ const PodcastDetailsHeader = ({
   textColor,
   onButtonClick,
   categories,
-  official
+  official,
+  podcastId
 } : {
   onClick?: any,
   title?: string,
@@ -91,6 +94,7 @@ const PodcastDetailsHeader = ({
   desc?: string,
   style?: any,
   isFollowed?: boolean,
+  podcastId?: string,
   bgColor?: string
   textColor?: string,
   onButtonClick?: any,
@@ -108,19 +112,22 @@ const PodcastDetailsHeader = ({
           <CoverArt src={ image } />
           <TitleContainer>
             <Title textColor={textColor}>{title}</Title>
-            {official  ? <Subtitle>Official</Subtitle> : <Subtitle textColor={textColor}>Community Managed</Subtitle>}
+            {subtitle !== undefined  && <Subtitle>{subtitle}</Subtitle>}
+            {/* {official  ? <Subtitle>Official</Subtitle> : <Subtitle textColor={textColor}>Community Managed</Subtitle>} */}
           </TitleContainer>
         </CardHeader>
         <span style={{ fontSize: '1.6rem', marginBottom: 32, color:textColor, maxWidth: 600, lineHeight:'2.5rem', textAlign: 'center' }}>{desc.slice(0, descLimit)}{descLimit < 251 && desc.length > 250 && '...'}  { desc.length > 250 ? descLimit < 251 ? <ReadMore onClick={() => setDescLimit(10000)}>Read More</ReadMore> :  <ReadMore onClick={() => setDescLimit(250)}>Read Less</ReadMore> : '' } </span>
         
         <BottomRow>
-          <Button
-            style={{marginRight: '1.6rem'}}
-            // borderMode={followingPodcast}
-            color='primary'
-          >
-            Start Premiere
-          </Button>
+          <Link passHref href={`/create/${podcastId}`}>
+            <Button
+              style={{marginRight: '1.6rem'}}
+              // borderMode={followingPodcast}
+              color='primary'
+            >
+              Start Premiere
+            </Button>
+          </Link>
           <Button>
             Edit Podcast
           </Button>

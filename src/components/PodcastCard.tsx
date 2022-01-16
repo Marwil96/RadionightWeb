@@ -1,88 +1,97 @@
 import React from 'react';
-import styled from "styled-components";
+import { styled } from '../../stitches.config';
 
-const Wrapper = styled.div`
-  /* padding: 0 16px; */
-  margin-bottom: 16px;
-  grid-column: span 4;
-  background: none;
-  cursor: pointer;
+const Wrapper = styled('div', {
+   /* padding: 0 16px; */
+  marginBottom: '16px',
+  gridColumn: 'span 4',
+  background: 'none',
+  cursor: 'pointer',
 
-  &:hover {
-    .content {
-      background-color: #5A5C60;
+  variants: {
+    type : {
+      carousel: {
+        // marginRight: '1.6rem',
+          // gridColumn: 'span 12',
+      }
+    }
+  },
+
+  '&:hover': {
+    '.content': {
+      backgroundColor: '#5A5C60',
     }
   }
-`
+});
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: #303235;
-  border-radius: 12px;
-  padding: 12px;
-  transition: ease 250ms all;
-`
-
-const CardHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 12px;
-`;
-
-const CoverArt = styled.img`
-  height: 64px;
-  width: 64px;
-  margin-right: 12px;
-  border-radius: 4px;
-  object-fit: cover;
-`
-
-const TitleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 1;
-`;
-const Title = styled.span`
-  font-size: 16px;
-  margin-bottom: 3px;
-  color: var(--white);
-  flex-shrink: 1;
-`
-const Subtitle = styled.span`
-  font-size: 14px;
-  color: var(--white);
-`;
-
-const BottomRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
-
-const MetaItem = styled.span`
-  font-size: 14px;
-  color: var(--white);
-`;
+const Content = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: '#303235',
+  borderRadius: '12px',
+  padding: '12px',
+  transition: 'ease 250ms all',
+});
 
 
-const Desc = styled.span`
-  font-size: 14px;
-  color: var(--white);
-  word-break: break-word;
-`;
+const CardHeader = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginBottom: '12px',
+});
 
-const PlayButtonWrapper = styled.button`
+const CoverArt = styled('img', {
+  height: '64px',
+  width: '64px',
+  marginRight: '12px',
+  borderRadius: '4px',
+  objectFit: 'cover',
+});
 
-`
+const TitleContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flexShrink: 1,
+});
 
-const PodcastCard = ({onClick, title, image, subtitle, desc, meta1, meta2, style, playButton } : {onClick?: any, title?: string, image?: any, subtitle?: string, desc?: string, meta1?: string, meta2?: string, style?: any, playButton?: any }) => {
+const Title = styled('span', {
+  fontSize: '16px',
+  marginBottom: '3px',
+  color: 'var(--white)',
+  flexShrink: 1,
+});
+
+const Subtitle = styled('span', {
+  fontSize: '14px',
+  color: 'var(--white)',
+});
+
+const BottomRow = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+});
+
+const MetaItem = styled('span', {
+  fontSize: '14px',
+  color: 'var(--white)',
+});
+
+
+const Desc = styled('span', {
+  fontSize: '14px',
+  color: 'var(--white)',
+  wordBreak: 'break-word',
+});
+
+
+const PodcastCard = ({onClick, title, image, subtitle, desc, meta1, meta2, style, playButton, type } : {onClick?: any, title?: string, image?: any, subtitle?: string, desc?: string, meta1?: string, meta2?: string, style?: any, playButton?: any, type?: any }) => {
   return (
-    <Wrapper onClick={onClick} style={style}>
+    <Wrapper onClick={onClick} style={style} type={type}>
       <Content className='content'>
         <CardHeader>
-          <CoverArt src={image} />
+          {image !== undefined && <CoverArt src={image} />}
           <TitleContainer>
             <Title>{title.length > 40 ? `${title.slice(0, 40)}...` : title}</Title>
             {subtitle !== undefined && <Subtitle>{subtitle}</Subtitle>}

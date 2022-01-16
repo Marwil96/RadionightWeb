@@ -3,20 +3,20 @@ import RSSParser from 'rss-parser';
 
 // import { Audio } from "expo-av";
 
-// export const FilterSearch = (library, searchTerm, limit) => {
-//   const searchResult = limit
-//     ? library
-//         .filter(
-//           (el) =>
-//             el.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
-//         )
-//         .slice(0, limit)
-//     : library.filter(
-//         (el) => el.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
-//       );
+export const FilterSearch = (library?:any, searchTerm:string, limit?: any) => {
+  const searchResult = limit
+    ? library
+        .filter(
+          (el) =>
+            el.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+        )
+        .slice(0, limit)
+    : library.filter(
+        (el) => el.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+      );
 
-//   return searchResult;
-// };
+  return searchResult;
+};
 
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
 

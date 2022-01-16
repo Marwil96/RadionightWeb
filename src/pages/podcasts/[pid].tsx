@@ -73,6 +73,8 @@ const PodcastDetails = () => {
         categories={data.categories}
         image={data.image}
         official={data.verified_ownership}
+        podcastId={pid}
+        subtitle={data.categories.map((item: string, index: any) => `${item}${index === 0 && data.categories.length !== 1 ? ' & ' : ''}` )}
         isFollowed={user_data.followed_podcasts !== undefined && user_data?.followed_podcasts.includes(pid)}
         // subtitle="Business & Comedy"
         onButtonClick={(isFollowed: boolean) => {
